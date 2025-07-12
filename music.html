@@ -5,9 +5,617 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music - Prexy Sam Ola | Gospel Musician</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1B365D 0%, #2C4A7A 50%, #FFD700 100%);
+            --secondary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --accent-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gold-gradient: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-primary: #1B365D;
+            --text-secondary: #666;
+            --text-white: #ffffff;
+            --shadow-primary: 0 20px 40px rgba(27, 54, 93, 0.15);
+            --shadow-hover: 0 25px 50px rgba(27, 54, 93, 0.25);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-white);
+            background: var(--primary-gradient);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(27, 54, 93, 0.2);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 120px 0 80px;
+            background: var(--primary-gradient);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 1000,100 1000,0"/></svg>');
+            background-size: cover;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Music Section */
+        .music-section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gold-gradient);
+            border-radius: 2px;
+        }
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .music-item {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-primary);
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .music-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .music-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .music-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .music-item-content {
+            padding: 2rem;
+        }
+
+        .music-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .music-item p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .music-player {
+            background: var(--glass-bg);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .music-player audio {
+            width: 100%;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        .play-button {
+            background: var(--primary-gradient);
+            color: var(--text-white);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+            width: 100%;
+            box-shadow: 0 8px 25px rgba(27, 54, 93, 0.3);
+        }
+
+        .play-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(27, 54, 93, 0.4);
+        }
+
+        .play-button:active {
+            transform: translateY(0);
+        }
+
+        /* Video Section */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .video-item {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-primary);
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+        }
+
+        .video-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .video-item iframe {
+            width: 100%;
+            height: 250px;
+            border: none;
+        }
+
+        .video-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 1.5rem;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--primary-gradient);
+            color: var(--text-white);
+            padding: 4rem 2rem;
+            border-radius: 25px;
+            text-align: center;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: var(--text-white);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: var(--text-white);
+            padding: 3rem 0 1rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+        }
+
+        .footer-section p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-section ul li a:hover {
+            opacity: 1;
+            color: #FFD700;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-white);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: #FFD700;
+            color: var(--text-primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 2rem;
+                transition: var(--transition);
+                gap: 1rem;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .page-header p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .music-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section {
+                padding: 3rem 1rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .music-item-content {
+                padding: 1.5rem;
+            }
+
+            .page-header {
+                padding: 100px 0 60px;
+            }
+
+            .music-section {
+                padding: 3rem 0;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Intersection Observer Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 
 <body>
@@ -42,152 +650,174 @@
 
     <main class="page-content">
         <div class="container">
-            <section class="music-section">
+            <section class="music-section animate-on-scroll">
                 <h2 class="section-title">Latest Songs</h2>
                 <div class="music-grid">
-                    <div class="music-item">
-                        <img src="/today.png" alt="Worship Anthem">
-                        <h3>Today</h3>
-                        <p>A powerful declaration of praise and worship</p>
-                        <audio controls style="width: 100%; margin-bottom: 1rem;">
-                            <source src="/songs/Today - Prexy Sam Ola.mp3" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                        <button class="play-button">
-                            <i class="fas fa-play"></i>
-                            Play Now
-                        </button>
+                    <div class="music-item loading">
+                        <img src="/today.png" alt="Today - Prexy Sam Ola">
+                        <div class="music-item-content">
+                            <h3>Today</h3>
+                            <p>A powerful declaration of praise and worship</p>
+                            <div class="music-player">
+                                <audio controls>
+                                    <source src="/songs/Today - Prexy Sam Ola.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                            <button class="play-button">
+                                <i class="fas fa-play"></i>
+                                Play Now
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="music-item">
-                        <img src="/no other name.jpg" alt="Holy Spirit">
-                        <h3>No Other Name</h3>
-                        <p>A gentle invitation for God's presence</p>
-                        <audio controls style="width: 100%; margin-bottom: 1rem;">
-                            <source src="/songs/no other name.mp3" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                        <button class="play-button">
-                            <i class="fas fa-play"></i>
-                            Play Now
-                        </button>
+                    <div class="music-item loading">
+                        <img src="/no other name.jpg" alt="No Other Name - Prexy Sam Ola">
+                        <div class="music-item-content">
+                            <h3>No Other Name</h3>
+                            <p>A gentle invitation for God's presence</p>
+                            <div class="music-player">
+                                <audio controls>
+                                    <source src="/songs/no other name.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                            <button class="play-button">
+                                <i class="fas fa-play"></i>
+                                Play Now
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="music-item">
-                        <img src="/mighty god.jpg" alt="Amazing Grace">
-                        <h3>Mighty God</h3>
-                        <p>A song to show the greatness of God</p>
-                        <audio controls style="width: 100%; margin-bottom: 1rem;">
-                            <source src="/songs/Mighty God - Prexy Sam Ola.mp3" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                        <button class="play-button">
-                            <i class="fas fa-play"></i>
-                            Play Now
-                        </button>
+                    <div class="music-item loading">
+                        <img src="/mighty god.jpg" alt="Mighty God - Prexy Sam Ola">
+                        <div class="music-item-content">
+                            <h3>Mighty God</h3>
+                            <p>A song to show the greatness of God</p>
+                            <div class="music-player">
+                                <audio controls>
+                                    <source src="/songs/Mighty God - Prexy Sam Ola.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                            <button class="play-button">
+                                <i class="fas fa-play"></i>
+                                Play Now
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="music-item">
-                        <img src="/today.png" alt="Breakthrough">
-                        <h3>Break</h3>
-                        <p>A song of victory and breakthrough</p>
-                        <audio controls style="width: 100%; margin-bottom: 1rem;">
-                            <source src="/songs/Break - Prexy Sam Ola.mp3" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                        <button class="play-button">
-                            <i class="fas fa-play"></i>
-                            Play Now
-                        </button>
+                    <div class="music-item loading">
+                        <img src="/today.png" alt="Break - Prexy Sam Ola">
+                        <div class="music-item-content">
+                            <h3>Break</h3>
+                            <p>A song of victory and breakthrough</p>
+                            <div class="music-player">
+                                <audio controls>
+                                    <source src="/songs/Break - Prexy Sam Ola.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                            <button class="play-button">
+                                <i class="fas fa-play"></i>
+                                Play Now
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="music-item">
-                        <img src="/only god.jpg" alt="Faithful God">
-                        <h3>Only God</h3>
-                        <p>Celebrating God's faithfulness</p>
-                        <audio controls style="width: 100%; margin-bottom: 1rem;">
-                            <source src="/songs/Only_God(256k).mp3" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                        <button class="play-button">
-                            <i class="fas fa-play"></i>
-                            Play Now
-                        </button>
+                    <div class="music-item loading">
+                        <img src="/only god.jpg" alt="Only God - Prexy Sam Ola">
+                        <div class="music-item-content">
+                            <h3>Only God</h3>
+                            <p>Celebrating God's faithfulness</p>
+                            <div class="music-player">
+                                <audio controls>
+                                    <source src="/songs/Only_God(256k).mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                            <button class="play-button">
+                                <i class="fas fa-play"></i>
+                                Play Now
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="music-item">
-                        <img src="/Help of God by Prexy Sam Ola.jpg" alt="Help Of God">
-                        <h3>Help Of God</h3>
-                        <p>A song relying on God's help</p>
-                        <audio controls style="width: 100%; margin-bottom: 1rem;">
-                            <source src="/songs/Help of God - Prexy Sam Ola.mp3" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                        <button class="play-button">
-                            <i class="fas fa-play"></i>
-                            Play Now
-                        </button>
+                    <div class="music-item loading">
+                        <img src="/Help of God by Prexy Sam Ola.jpg" alt="Help Of God - Prexy Sam Ola">
+                        <div class="music-item-content">
+                            <h3>Help Of God</h3>
+                            <p>A song relying on God's help</p>
+                            <div class="music-player">
+                                <audio controls>
+                                    <source src="/songs/Help of God - Prexy Sam Ola.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                            <button class="play-button">
+                                <i class="fas fa-play"></i>
+                                Play Now
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section class="music-section">
+            <section class="music-section animate-on-scroll">
                 <h2 class="section-title">Music Videos</h2>
                 <div class="video-grid">
-                    <div class="video-item">
+                    <div class="video-item loading">
                         <iframe src="https://www.youtube.com/embed/Geawmm3RtUc"
-                            title="No Other Name - Official Music Video" frameborder="0"
+                            title="No Other Name - Official Music Video"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen>
                         </iframe>
                         <h3>No Other Name - Official Music Video</h3>
                     </div>
 
-                    <div class="video-item">
+                    <div class="video-item loading">
                         <iframe src="https://www.youtube.com/embed/HUxN7Ycjqnw"
-                            title="Mighty God - Official Music Video" frameborder="0"
+                            title="Mighty God - Official Music Video"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen>
                         </iframe>
                         <h3>Mighty God - Official Music Video</h3>
                     </div>
 
-                    <div class="video-item">
-                        <iframe src="https://www.youtube.com/embed/acznOSgj6k8" title="Agbara - Official Music Video"
-                            frameborder="0"
+                    <div class="video-item loading">
+                        <iframe src="https://www.youtube.com/embed/acznOSgj6k8" 
+                            title="Agbara - Official Music Video"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen>
                         </iframe>
                         <h3>Agbara - Official Music Video</h3>
                     </div>
 
-                    <div class="video-item">
-                        <iframe src="https://www.youtube.com/embed/pwG-_BIFWqs" title="Break - Lyrics Video"
-                            frameborder="0"
+                    <div class="video-item loading">
+                        <iframe src="https://www.youtube.com/embed/pwG-_BIFWqs" 
+                            title="Break - Lyrics Video"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen>
                         </iframe>
                         <h3>Break - Lyrics Video</h3>
                     </div>
 
-                    <div class="video-item">
+                    <div class="video-item loading">
                         <iframe src="https://www.youtube.com/embed/jhJiedJGNCI"
-                            title="All The Praise by Prexy Sam Ola lyrics video - Long Play" frameborder="0"
+                            title="All The Praise by Prexy Sam Ola lyrics video - Long Play"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen>
                         </iframe>
-                        <h3>All The Praise by Prexy Sam Ola lyrics video - Long Play</h3>
+                        <h3>All The Praise - Long Play</h3>
                     </div>
                 </div>
             </section>
-            <section class="cta-section"
-                style="background: linear-gradient(135deg, #1B365D, #2C4A7A); color: white; padding: 4rem 2rem; border-radius: 15px; text-align: center; margin-top: 4rem;">
-                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Stay Updated</h2>
-                <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">Subscribe to get notified about new
-                    releases and upcoming events</p>
-                <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-                    <a href="https://www.youtube.com/@prexysketch" target="_blank" rel="noopener noreferrer"
-                        class="cta-button">
+
+            <section class="cta-section animate-on-scroll">
+                <h2>Stay Updated</h2>
+                <p>Subscribe to get notified about new releases and upcoming events</p>
+                <div class="cta-buttons">
+                    <a href="https://www.youtube.com/@prexysketch" target="_blank" rel="noopener noreferrer" class="cta-button">
                         <i class="fab fa-youtube"></i>
                         Subscribe on YouTube
                     </a>
@@ -205,7 +835,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Prexy Sam Ola</h3>
-                    <p>Gospel Musician spreading God's love through worship</p>
+                    <p>Gospel Musician spreading God's love through worship and inspiring hearts worldwide with powerful melodies and divine messages.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
@@ -220,76 +850,345 @@
                 <div class="footer-section">
                     <h4>Follow Me</h4>
                     <div class="social-links">
-                        <a href="https://www.youtube.com/@prexysketch" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.youtube.com/@prexysketch" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                             <i class="fab fa-youtube"></i>
                         </a>
-                        <a href="https://www.instagram.com/prexy_sam_ola?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-                            target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.instagram.com/prexy_sam_ola?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="https://web.facebook.com/segun.olatunji.35" target="_blank" rel="noopener noreferrer">
+                        <a href="https://web.facebook.com/segun.olatunji.35" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                             <i class="fab fa-facebook"></i>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Prexy Sam Ola. All rights reserved.</p>
+                <p>&copy; 2025 Prexy Sam Ola. All rights reserved. | Crafted with ❤️ for Gospel Music</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile navigation toggle
+        // Enhanced Mobile navigation toggle
         const hamburger = document.querySelector('.hamburger');
         const navMenu = document.querySelector('.nav-menu');
 
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
         });
 
         // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-        }));
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
 
-        // Header scroll effect
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Enhanced Header scroll effect
+        let lastScrollTop = 0;
+        const header = document.querySelector('.header');
+
         window.addEventListener('scroll', () => {
-            const header = document.querySelector('.header');
-            if (window.scrollY > 100) {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
+            
+            // Hide/show header on scroll
+            if (scrollTop > lastScrollTop && scrollTop > 200) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
         });
 
-        // Play button functionality
+        // Enhanced Play button functionality with visual feedback
+        let currentlyPlaying = null;
+
         document.querySelectorAll('.play-button').forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function() {
                 const musicItem = this.closest('.music-item');
                 const audio = musicItem.querySelector('audio');
+                
+                if (!audio) return;
 
-                if (audio) {
-                    if (audio.paused) {
-                        audio.play();
-                        this.innerHTML = '<i class="fas fa-pause"></i> Pause';
-                    } else {
-                        audio.pause();
-                        this.innerHTML = '<i class="fas fa-play"></i> Play Now';
-                    }
+                // Stop currently playing audio
+                if (currentlyPlaying && currentlyPlaying !== audio) {
+                    currentlyPlaying.pause();
+                    currentlyPlaying.currentTime = 0;
+                    const currentButton = currentlyPlaying.closest('.music-item').querySelector('.play-button');
+                    currentButton.innerHTML = '<i class="fas fa-play"></i> Play Now';
+                    currentlyPlaying.closest('.music-item').classList.remove('playing');
+                }
+
+                if (audio.paused) {
+                    audio.play();
+                    this.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                    musicItem.classList.add('playing');
+                    currentlyPlaying = audio;
+                    
+                    // Add pulse animation to playing card
+                    musicItem.style.animation = 'pulse 2s ease-in-out infinite';
+                } else {
+                    audio.pause();
+                    this.innerHTML = '<i class="fas fa-play"></i> Play Now';
+                    musicItem.classList.remove('playing');
+                    musicItem.style.animation = 'none';
+                    currentlyPlaying = null;
                 }
             });
         });
 
-        // Audio ended event
+        // Enhanced audio event handlers
         document.querySelectorAll('audio').forEach(audio => {
-            audio.addEventListener('ended', function () {
+            audio.addEventListener('ended', function() {
                 const button = this.closest('.music-item').querySelector('.play-button');
+                const musicItem = this.closest('.music-item');
+                
                 button.innerHTML = '<i class="fas fa-play"></i> Play Now';
+                musicItem.classList.remove('playing');
+                musicItem.style.animation = 'none';
+                currentlyPlaying = null;
+            });
+
+            audio.addEventListener('error', function() {
+                const button = this.closest('.music-item').querySelector('.play-button');
+                button.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
+                button.disabled = true;
+                button.style.opacity = '0.6';
+            });
+
+            // Add loading state
+            audio.addEventListener('loadstart', function() {
+                const button = this.closest('.music-item').querySelector('.play-button');
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            });
+
+            audio.addEventListener('canplay', function() {
+                const button = this.closest('.music-item').querySelector('.play-button');
+                if (button.innerHTML.includes('Loading')) {
+                    button.innerHTML = '<i class="fas fa-play"></i> Play Now';
+                }
             });
         });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    
+                    // Stagger animation for grid items
+                    if (entry.target.classList.contains('music-grid') || entry.target.classList.contains('video-grid')) {
+                        const items = entry.target.querySelectorAll('.music-item, .video-item');
+                        items.forEach((item, index) => {
+                            setTimeout(() => {
+                                item.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1}s both`;
+                            }, index * 100);
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Enhanced loading animations
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.loading').forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.animation = `fadeInUp 0.6s ease-out forwards`;
+                }, index * 150);
+            });
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Enhanced CTA button interactions
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add dynamic background particles effect
+        function createParticles() {
+            const pageHeader = document.querySelector('.page-header');
+            const particlesContainer = document.createElement('div');
+            particlesContainer.className = 'particles-container';
+            particlesContainer.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                overflow: hidden;
+            `;
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute;
+                    width: 2px;
+                    height: 2px;
+                    background: rgba(255, 255, 255, 0.6);
+                    border-radius: 50%;
+                    animation: float ${3 + Math.random() * 4}s ease-in-out infinite;
+                    animation-delay: ${Math.random() * 2}s;
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                `;
+                particlesContainer.appendChild(particle);
+            }
+            
+            pageHeader.appendChild(particlesContainer);
+        }
+
+        // Initialize particles
+        createParticles();
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Performance optimization: Debounce scroll events
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Apply debounced scroll handler
+        const debouncedScrollHandler = debounce(() => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }, 10);
+
+        window.addEventListener('scroll', debouncedScrollHandler);
+
+        // Add touch support for mobile devices
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartY - touchEndY;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe up - hide mobile menu if open
+                    if (navMenu.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            }
+        }
+
+        // Add visual feedback for social links
+        document.querySelectorAll('.social-links a').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) rotate(5deg)';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotate(0deg)';
+            });
+        });
+
+        // Enhanced error handling for images
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', function() {
+                this.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                this.style.display = 'flex';
+                this.style.alignItems = 'center';
+                this.style.justifyContent = 'center';
+                this.style.color = 'white';
+                this.style.fontSize = '1.2rem';
+                this.innerHTML = '<i class="fas fa-music"></i>';
+            });
+        });
+
+        // Add loading state for the page
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        console.log('🎵 Prexy Sam Ola Music Page - Enhanced Version Loaded Successfully! 🎵');
     </script>
 </body>
 

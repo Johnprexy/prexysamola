@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,673 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <style>
+        /* Base styles from your existing CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header styles */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar {
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo h2 {
+            color: #1B365D;
+            font-weight: 700;
+            font-size: 1.8rem;
+            text-decoration: none;
+            background: linear-gradient(45deg, #1B365D, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #1B365D;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #FFD700;
+            background: linear-gradient(45deg, #1B365D, #2C4A7A);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #1B365D;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Enhanced Hero Section with Animated Background */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1B365D 0%, #2C4A7A 50%, #1B365D 100%);
+            z-index: 1;
+        }
+
+        .hero-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .floating-notes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .note {
+            position: absolute;
+            color: rgba(255, 215, 0, 0.6);
+            font-size: 2rem;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .note:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .note:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .note:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .note:nth-child(4) { left: 40%; animation-delay: 1s; }
+        .note:nth-child(5) { left: 50%; animation-delay: 3s; }
+        .note:nth-child(6) { left: 60%; animation-delay: 5s; }
+        .note:nth-child(7) { left: 70%; animation-delay: 1.5s; }
+        .note:nth-child(8) { left: 80%; animation-delay: 3.5s; }
+        .note:nth-child(9) { left: 90%; animation-delay: 2.5s; }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10%, 90% { 
+                opacity: 1;
+            }
+            50% { 
+                transform: translateY(-10vh) rotate(180deg);
+                opacity: 0.8;
+            }
+        }
+
+        .worship-rays {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        .worship-rays::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(255, 215, 0, 0.1) 45deg,
+                transparent 90deg,
+                rgba(255, 215, 0, 0.1) 135deg,
+                transparent 180deg,
+                rgba(255, 215, 0, 0.1) 225deg,
+                transparent 270deg,
+                rgba(255, 215, 0, 0.1) 315deg,
+                transparent 360deg
+            );
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(27, 54, 93, 0.4), rgba(44, 74, 122, 0.3));
+            z-index: 3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 4;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            color: #FFD700;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Events Section */
+        .events-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1B365D;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            transform: translateX(-50%);
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-card-content {
+            display: flex;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        .event-date {
+            background: linear-gradient(135deg, #1B365D, #2C4A7A);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 100px;
+            height: fit-content;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-date::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .date-day {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #FFD700;
+        }
+
+        .date-month {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 5px 0;
+            text-transform: uppercase;
+        }
+
+        .date-year {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .event-details {
+            flex: 1;
+        }
+
+        .event-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 1rem;
+        }
+
+        .event-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-location,
+        .event-time {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .event-location i,
+        .event-time i {
+            color: #FFD700;
+            width: 16px;
+        }
+
+        .event-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #1B365D;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #1B365D;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border: 2px solid #1B365D;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: #1B365D;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, #1B365D 0%, #2C4A7A 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,215,0,0.1)"/></svg>') repeat;
+            animation: sparkle 10s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .newsletter-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 2rem auto 0;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1B365D;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3,
+        .footer-section h4 {
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #FFD700;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFD700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #FFD700;
+            color: #1B365D;
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            color: #ccc;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 2rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                margin: 1rem 0;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .event-card-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .event-date {
+                align-self: center;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-input {
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .event-card-content {
+                padding: 1rem;
+            }
+
+            .event-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
+
 <body>
     <header class="header">
         <nav class="navbar">
@@ -33,27 +700,25 @@
 
     <main>
         <section class="hero">
-    <div class="hero-video-container">
-        <iframe 
-            class="hero-video"
-            src="https://www.youtube.com/embed/Geawmm3RtUc?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playlist=Geawmm3RtUc&start=0"
-            title="Prexy Sam Ola - Music Video Background"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-        </iframe>
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <h1 class="hero-title">Prexy Sam Ola</h1>
-        <p class="hero-subtitle">Gospel Musician • Worship Leader • Songwriter</p>
-        <p class="hero-description">Touching hearts and souls through the power of worship music</p>
-        <a href="music.html" class="cta-button">
-            <i class="fas fa-play"></i>
-            Listen Now
-        </a>
-    </div>
-</section>
+            <div class="hero-video-container">
+                <iframe class="hero-video"
+                    src="https://www.youtube.com/embed/Geawmm3RtUc?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playlist=Geawmm3RtUc&start=0"
+                    title="Prexy Sam Ola - Music Video Background" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">Prexy Sam Ola</h1>
+                <p class="hero-subtitle">Gospel Musician • Worship Leader • Songwriter</p>
+                <p class="hero-description">Touching hearts and souls through the power of worship music</p>
+                <a href="music.html" class="cta-button">
+                    <i class="fas fa-play"></i>
+                    Listen Now
+                </a>
+            </div>
+        </section>
         </section>
 
         <section class="featured-section">
@@ -64,8 +729,10 @@
                         <img src="/today.png" alt="Latest Album" class="album-cover">
                         <div class="album-info">
                             <h3>Today</h3>
-                            <p>Experience the latest collection of worship songs that will uplift your spirit and draw you closer to God.</p>
-                            <a href="https://open.spotify.com/album/6FIoMz2pFsS81AhBfMpcpa?si=K42fp91wTGaXuDAvgA_7fg" class="btn-secondary">Explore Music</a>
+                            <p>Experience the latest collection of worship songs that will uplift your spirit and draw
+                                you closer to God.</p>
+                            <a href="https://open.spotify.com/album/6FIoMz2pFsS81AhBfMpcpa?si=K42fp91wTGaXuDAvgA_7fg"
+                                class="btn-secondary">Explore Music</a>
                         </div>
                     </div>
                 </div>
@@ -77,7 +744,9 @@
                 <div class="about-content">
                     <div class="about-text">
                         <h2 class="section-title">About Prexy Sam Ola</h2>
-                        <p>A passionate gospel artist based in the USA, originally from Nigeria, dedicated to spreading the love of God through powerful worship music. With a heart for ministry and a voice anointed by God, Prexy Sam Ola continues to touch lives across the globe.</p>
+                        <p>A passionate gospel artist based in the USA, originally from Nigeria, dedicated to spreading
+                            the love of God through powerful worship music. With a heart for ministry and a voice
+                            anointed by God, Prexy Sam Ola continues to touch lives across the globe.</p>
                         <a href="about.html" class="btn-secondary">Learn More</a>
                     </div>
                     <div class="about-image">
@@ -144,7 +813,8 @@
                         <a href="https://www.youtube.com/@prexysketch" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-youtube"></i>
                         </a>
-                        <a href="https://www.instagram.com/prexy_sam_ola?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.instagram.com/prexy_sam_ola?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                            target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-instagram"></i>
                         </a>
                         <a href="https://web.facebook.com/segun.olatunji.35" target="_blank" rel="noopener noreferrer">
@@ -196,4 +866,5 @@
         });
     </script>
 </body>
+
 </html>
